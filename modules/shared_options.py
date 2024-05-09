@@ -175,6 +175,7 @@ options_templates.update(options_section(('sdxl', "Stable Diffusion XL", "sd"), 
 }))
 
 options_templates.update(options_section(('vae', "VAE", "sd"), {
+    "disable_default_vae": OptionInfo(False, "Disable default VAE").info("disables the default VAE model in favor of the one specified in the checkpoint"),
     "sd_vae_explanation": OptionHTML("""
 <abbr title='Variational autoencoder'>VAE</abbr> is a neural network that transforms a standard <abbr title='red/green/blue'>RGB</abbr>
 image into latent space representation and back. Latent space representation is what stable diffusion is working on during sampling

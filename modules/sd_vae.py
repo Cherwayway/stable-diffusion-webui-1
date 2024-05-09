@@ -166,6 +166,14 @@ def resolve_vae_near_checkpoint(checkpoint_file) -> VaeResolution:
 
 
 def resolve_vae(checkpoint_file) -> VaeResolution:
+    if shared.opts.disable_default_vae:
+        print('Default VAE is disabled.')
+        return VaeResolution()
+
+    res = resolve_vae_near_checkpoint(checkpoint_file)
+    if res.resolved:
+        return res
+
     if shared.cmd_opts.vae_path is not None:
         return VaeResolution(shared.cmd_opts.vae_path, 'from commandline argument')
 
@@ -175,14 +183,6 @@ def resolve_vae(checkpoint_file) -> VaeResolution:
     res = resolve_vae_from_user_metadata(checkpoint_file)
     if res.resolved:
         return res
-
-    res = resolve_vae_near_checkpoint(checkpoint_file)
-    if res.resolved:
-        return res
-
-    res = resolve_vae_from_setting()
-
-    return res
 
 
 def load_vae_dict(filename, map_location):
